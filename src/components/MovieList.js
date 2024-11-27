@@ -4,11 +4,14 @@ const MovieList = (props) =>{
     return (
         <ul>
             {props.movies.map((movie)=>{
-                <Movie 
-                   title = {movie.title}
-                   releaseDate = {movie.release}
-                   openingText = {movie.openingText}
-                />
+                return (
+
+                    <Movie 
+                    title = {movie.title}
+                    releaseDate = {movie.release}
+                    openingText = {movie.openingText}
+                    />
+                );
             })}
         </ul>
     );
