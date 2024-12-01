@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState ,useMemo} from "react";
 import MovieList from "./components/MovieList";
 
 function App() {
@@ -13,14 +13,15 @@ function App() {
     setError(null);
     setRetry(false);
 
+    
     try {
-      const response = await fetch('https://swapi.dev/api/film/')
+      const response = await fetch('https://swapi.dev/api/films/')
       
       if (!response.ok) {
         throw new Error('Something went wrong ....Retrying')
       }
       const data = await response.json();
-
+      
       const transformedmovies = data.results.map((movieData) => {
         return {
           id: movieData.episode_id,
@@ -39,24 +40,19 @@ function App() {
     }
     setIsLoading(false);
   }
+  useEffect(()=>{
+      fetchMoviesHandler();
+  },[]);
 
-  let content = <p>Found No Movies.</p>
-
-  if(Movies.length>0){
-    content = <MovieList movies={Movies} />;
-  }
-
-  if(error){
-    content = <p>{error}</p>
-  }
-
-  if(isLoading){
-    content = <p>Loading...</p>;
-  }
+  const content = useMemo(() => {
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    if (Movies.length > 0) return <MovieList movies={Movies} />;
+    return <p>Found No Movies.</p>;
+  }, [isLoading, error, Movies]);
 
   const cancleButtonHandler = () =>{
     setError(null);
-    console.log('hiii');
   }
 
   return (
