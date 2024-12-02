@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 
-const MoviesForm = () => {
+const MoviesForm = (props) => {
     const [enteredtitle,setEnteredTitle] = useState('');
     const [enteredtext,setEnteredText] = useState('');
     const [entereddata,setEnteredData] = useState('');
@@ -21,15 +21,15 @@ const MoviesForm = () => {
     const submitFormHandler = (event) =>{
           event.preventDefault();
           const NewMovieObj = {
-            enteredtitle,
-            enteredtext,
-            entereddata,
+            title: enteredtitle,
+            openingText: enteredtext,
+            releaseDate: entereddata
           }
-          console.log(NewMovieObj);
+          props.onAddMovie(NewMovieObj);
 
-          setEnteredTitle(' ');
-          setEnteredText(' ');
-          setEnteredData(' ');
+          setEnteredTitle('');
+          setEnteredText('');
+          setEnteredData('');
     }
    
     return (
@@ -37,18 +37,18 @@ const MoviesForm = () => {
             <form onSubmit={submitFormHandler}>
                 <div>
                     <label htmlFor="title">Title</label>
-                    <input type="text" id="title" onChange={inputChangeHandler}/>
+                    <input type="text" id="title" value={enteredtitle} onChange={inputChangeHandler}/>
                 </div>
                 <div>
                     <label htmlFor="text">Opening Text</label>
-                    <input type="text" id="text" onChange={textChangeHandler}/>
+                    <input type="text" id="text" value={enteredtext} onChange={textChangeHandler}/>
                 </div>
                 <div>
                     <label htmlFor="date">Release Date</label>
-                    <input type="date" id="date" onChange={dataChangeHandler}/>
+                    <input type="date" id="date" value={entereddata} onChange={dataChangeHandler}/>
                 </div>
                 <div>
-                    <button>Add Movies</button>
+                    <button type="submit">Add Movies</button>
                 </div>
             </form>
         </Fragment>

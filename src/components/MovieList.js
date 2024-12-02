@@ -1,16 +1,19 @@
 import Movie from "./Movie";
 
-const MovieList = (props) =>{
+const MovieList = (props) => {
     return (
         <ul>
-            {props.movies.map((movie)=>{
+            {props.movies.map((movie) => {
                 return (
-
-                    <Movie 
-                    title = {movie.title}
-                    releaseDate = {movie.release}
-                    openingText = {movie.openingText}
-                    />
+                    <li key={movie.id}>
+                        <Movie
+                          
+                            title={movie.title}
+                            releaseDate={movie.releaseDate}
+                            openingText={movie.openingText}
+                        />
+                       <button onClick={() => props.onDeleteMovie(movie.id)}>Delete</button>
+                    </li>
                 );
             })}
         </ul>
